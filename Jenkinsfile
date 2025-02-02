@@ -16,27 +16,30 @@ pipeline {
   // 'agent any' means this pipeline can run on any available Jenkins agent
   agent any 
 
-  // First stage: Start Docker containers using Docker Compose
-  stage('Start Docker Compose') {
-    steps {
-      // Runs 'docker compose up -d' to start services in detached mode
-      sh 'docker compose up -d'
+  // Stages from pipeline
+  stages {
+    // First stage: Start Docker containers using Docker Compose
+    stage('Start Docker Compose') {
+      steps {
+        // Runs 'docker compose up -d' to start services in detached mode
+        sh 'docker compose up -d'
+      }
     }
-  }
 
-  // Second stage: Introduces a delay to allow services to start properly
-  stage('Sleep') {
-    steps {
-      // Waits for 10 seconds before moving to the next stage
-      sh 'sleep 10'
+    // Second stage: Introduces a delay to allow services to start properly
+    stage('Sleep') {
+      steps {
+        // Waits for 10 seconds before moving to the next stage
+        sh 'sleep 10'
+      }
     }
-  }
 
-  // Third stage: Runs application tests
-  stage('Application Tests') {
-    steps {
-      // Executes a script named 'app-tests.sh' to test the application
-      sh 'app-tests.sh'
+    // Third stage: Runs application tests
+    stage('Application Tests') {
+      steps {
+        // Executes a script named 'app-tests.sh' to test the application
+        sh 'app-tests.sh'
+      }
     }
   }
 }
