@@ -37,8 +37,9 @@ pipeline {
     // Third stage: Runs application tests
     stage('Application Tests') {
       steps {
+        sh 'chmod +x app-tests.sh'
         // Executes a script named 'app-tests.sh' to test the application
-        sh 'app-tests.sh'
+        sh './app-tests.sh'
       }
     }
   }
