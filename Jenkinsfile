@@ -46,6 +46,12 @@ pipeline {
       }
     }
 
+    stage('Wait quality gate') {
+      steps {
+        waitForQualityGate abortPipeline: true
+      }
+    }
+
     // Third stage: Runs application tests
     stage('Application Tests') {
       steps {
