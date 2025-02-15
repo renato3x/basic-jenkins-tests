@@ -37,11 +37,11 @@ pipeline {
     stage('Sonarqube validation') {
       steps {
         script {
-          scannerHome = tool 'sonar-scanner';
+          SONAR_SCANNER_HOME = tool 'sonar-scanner';
         }
 
         withSonarQubeEnv('sonar-server') {
-          sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=redis-app -Dsonar.sources=. -Dsonar.host.url${env.SONAR_HOST_URL} -Dsonar.login=${env.SONAR_AUTH_TOKEN}"
+          sh "${SONAR_SCANNER_HOME}/bin/sonar-scanner -Dsonar.projectKey=redis-app -Dsonar.sources=. -Dsonar.host.url${env.SONAR_HOST_URL} -Dsonar.login=${env.SONAR_AUTH_TOKEN}"
         }
       }
     }
