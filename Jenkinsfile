@@ -41,7 +41,7 @@ pipeline {
         }
 
         withSonarQubeEnv('sonar-server') {
-          sh "${SONAR_SCANNER_HOME}/bin/sonar-scanner -Dsonar.projectKey=redis-app -Dsonar.sources=. -Dsonar.host.url${env.SONAR_HOST_URL} -Dsonar.login=${env.SONAR_AUTH_TOKEN}"
+          sh "${SONAR_SCANNER_HOME}/bin/sonar-scanner -Dsonar.projectKey=redis-app -Dsonar.sources=. -Dsonar.host.url${env.SONAR_HOST_URL} -Dsonar.login=${env.SONAR_AUTH_TOKEN} -Dsonar.exclusions=**/node_modules/**,**/dist/**"
         }
       }
     }
