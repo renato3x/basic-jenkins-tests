@@ -1,0 +1,41 @@
+---
+apiVersion: apps/v1 # Definimos a versão da API do Kubernetes para criar o Deployment
+kind: Deployment # Dizemos que queremos criar um Deployment
+metadata:
+  name: redis-server # Nome do Deployment
+  namespace: devops
+  labels:
+    app: redis # Rótulo usado para identificar o Deployment
+spec:
+  selector:
+    matchLabels:
+      app: redis # O Kubernetes vai procurar Pods com esse rótulo para gerenciar
+  replicas: 1 # Queremos rodar apenas 1 instância do Redis
+  template:
+    metadata:
+      labels:
+        app: redis # O Pod que será criado também terá esse rótulo
+    spec:
+      containers:
+        - name: redis-server # Nome do container dentro do Pod
+          image: redis # Usa a imagem oficial do Redis do Docker Hub
+          resources:
+            requests:
+              cpu: 100m # Reserva 0.1 CPU (100 milicores) para o container
+              memory: 100Mi # Reserva 100MB de RAM
+          ports:
+          -  containerPort: 6379
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-server
+  namespace: devops
+  labels:
+    app: redis
+spec:
+  ports:
+  - port: 6379
+    targetPort: 6379
+  selector:
+    app: redis
